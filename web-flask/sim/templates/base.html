@@ -1,0 +1,107 @@
+<html>
+
+<head>
+    <title>Selamat Datang</title>
+    <link rel="stylesheet" href="{{url_for ('static', filename='css/bootstrap.min.css')}}"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for ('static', filename='css/style.css')}}">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{url_for('rmahasiswa.home')}}">Home <span
+                                class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('rmahasiswa.about')}}">About</a>
+                    </li>
+                    {% if current_user.is_authenticated %}
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('rmahasiswa.login_m')}}">Login Mahasiswa</a>
+                    </li>
+                    {% endif %}
+
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="shadow p-3 mb-5 bg-white rounded">
+                    {% with messages = get_flashed_messages(with_categories=True) %}
+                    {% if messages %}
+                    {% for category, message in messages %}
+
+                    <div class="alert alert-{{category}}">
+                        {{message}}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+
+                    {% block konten %}
+
+                    {% endblock %}
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="shadow p-3 mb-5 bg-white rounded">
+                    {% if current_user.is_authenticated %}
+                    <div class="card" style="width: 20rem;">
+                        <img src="{{url_for('static', filename='foto/'+current_user.foto)}}" class="card-img-top"
+                            alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{current_user.nama}}!</h5>
+                            <p class="card-text">{{current_user.email}}</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><a href="{{url_for('rmahasiswa.akun_mahasiswa')}}">
+                                    Dashboard</a></li>
+                            <li class="list-group-item"><a href="{{url_for('rmahasiswa.pengaduan')}}">
+                                    Pengaduan</a></li>
+                            <li class="list-group-item">Vestibulum at eros</li>
+                        </ul>
+                        <div class="card-body">
+                            <a href="{{url_for('rmahasiswa.edit_mahasiswa')}}" class="card-link">Update Profil</a>
+                            <a href="{{url_for('rmahasiswa.logout_mahasiswa')}}" class="card-link">Logout</a>
+                        </div>
+                    </div>
+                    {% else %}
+                    <h1>Menu Lain</h1>
+                    <li>Data Mahasiswa</li>
+                    <li>Data Dosen</li>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+    crossorigin="anonymous"></script>
+<script src="{{url_for('static', filename='js/bootstrap.min.js')}}"
+    integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
+    crossorigin="anonymous"></script>
+
+</html>

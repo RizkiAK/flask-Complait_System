@@ -1,0 +1,34 @@
+aktif venv : & f:/gamaria/web-flask/venv/Scripts/Activate.ps1
+
+manual sqlalchemy in python shell for make or generate a database:
+test:
+from sim import db
+from sim.models import Tmahasiswa, Tpengaduan
+db.create_all()
+
+
+Tmahasiswa.query.all()
+
+//////////////
+create database
+ini
+with app.app_context():
+    db.create_all()
+
+atau
+app.app_context().push()
+db.create_all()
+
+boostrap 4.5
+
+
+=========
+flask migrate
+ADD FOLDER : $ flask db init
+EDIT : $ flask db migrate
+APPLY : $ flask db upgrade
+
+
+alternatif
+db.init_app(app)
+migrate.init_app(app, db)
